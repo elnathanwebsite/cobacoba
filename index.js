@@ -9,435 +9,312 @@ app.use(express.static('public'));
 // Route utama
 app.get('/', (req, res) => {
     res.send(`
-    <!DOCTYPE html>
-    <html lang="id">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Landing Page Super Keren</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-        <style>
-            /* Reset dan variabel */
-            :root {
-                --primary-color: #4A00E0;
-                --secondary-color: #8E2DE2;
-                --text-color: #333;
-                --light-bg: #f9f9f9;
-            }
+   
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pendaftaran</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
 
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-            }
+        body {
+            background: linear-gradient(135deg, #4a148c, #7b1fa2);
+            min-height: 100vh;
+            padding: 20px;
+            color: #fff;
+        }
 
-            body {
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                line-height: 1.6;
-                overflow-x: hidden;
-            }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(74, 20, 140, 0.3);
+            color: #333;
+        }
 
-            /* Navbar */
-            .navbar {
-                position: fixed;
-                top: 0;
-                width: 100%;
-                background: rgba(255, 255, 255, 0.95);
-                padding: 1rem 2rem;
-                z-index: 1000;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                transition: all 0.3s ease;
-            }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #4a148c;
+            padding-bottom: 20px;
+        }
 
-            .navbar.scrolled {
-                padding: 0.5rem 2rem;
-            }
+        .company-info {
+            background: linear-gradient(45deg, #4a148c, #7b1fa2);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
 
-            .nav-links {
-                display: flex;
-                justify-content: center;
-                gap: 2rem;
-            }
+        .profile-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #4a148c;
+        }
 
-            .nav-links a {
-                text-decoration: none;
-                color: var(--text-color);
-                font-weight: 500;
-                transition: color 0.3s ease;
-            }
+        .applications-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
 
-            .nav-links a:hover {
-                color: var(--primary-color);
-            }
+        .applications-table th,
+        .applications-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
 
-            /* Hero Section */
-            .hero {
-                min-height: 100vh;
-                background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                text-align: center;
-                color: white;
-                position: relative;
-                overflow: hidden;
-            }
+        .applications-table th {
+            background: #4a148c;
+            color: white;
+        }
 
-            .hero::before {
-                content: '';
-                position: absolute;
-                width: 150%;
-                height: 150%;
-                background: repeating-linear-gradient(
-                    45deg,
-                    rgba(255,255,255,0.1) 0px,
-                    rgba(255,255,255,0.1) 10px,
-                    transparent 10px,
-                    transparent 20px
-                );
-                animation: move-bg 20s linear infinite;
-            }
+        .applications-table tr:nth-child(even) {
+            background-color: #f5f5f5;
+        }
 
-            @keyframes move-bg {
-                0% { transform: translate(-50%, -50%) rotate(0deg); }
-                100% { transform: translate(-50%, -50%) rotate(360deg); }
-            }
+        .applications-table tr:hover {
+            background-color: #e0e0e0;
+        }
 
-            .hero-content {
-                position: relative;
-                z-index: 1;
-                max-width: 800px;
-                padding: 2rem;
-            }
+        h1, h2, h3 {
+            color: #4a148c;
+        }
 
-            .hero h1 {
-                font-size: 4rem;
-                margin-bottom: 1.5rem;
-                text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            }
+        .job-listings {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
 
-            .hero p {
-                font-size: 1.5rem;
-                margin-bottom: 2rem;
-            }
+        .job-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #4a148c;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
 
-            /* Buttons */
-            .btn {
-                display: inline-block;
-                padding: 1rem 2rem;
-                border-radius: 50px;
-                text-decoration: none;
-                font-weight: bold;
-                transition: all 0.3s ease;
-                margin: 0.5rem;
-            }
+        .job-info {
+            margin-bottom: 15px;
+        }
 
-            .btn-primary {
-                background: white;
-                color: var(--primary-color);
-            }
+        .btn-lamar {
+            background: #4a148c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
 
-            .btn-secondary {
-                background: transparent;
-                color: white;
-                border: 2px solid white;
-            }
+        .btn-lamar:hover {
+            background: #7b1fa2;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
 
-            .btn:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            }
+        .no-data {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Dashboard Pendaftaran PT Elnathan</h1>
+            <div id="current-time"></div>
+        </div>
 
-            /* Features Section */
-            .features {
-                padding: 5rem 2rem;
-                background: var(--light-bg);
-            }
+        <div class="company-info">
+            <h2>Informasi Perusahaan</h2>
+            <p><strong>Nama Perusahaan:</strong> PT. Digital Inovasi Teknologi</p>
+            <p><strong>Alamat:</strong> Jl. Teknologi Raya No. 123, Jakarta Selatan</p>
+            <p><strong>Email:</strong> careers@digitalinovasi.com</p>
+            <p><strong>Telepon:</strong> (021) 555-0123</p>
+        </div>
 
-            .features-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 2rem;
-                max-width: 1200px;
-                margin: 0 auto;
-            }
-
-            .feature-card {
-                background: white;
-                padding: 2rem;
-                border-radius: 10px;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-                transition: all 0.3s ease;
-            }
-
-            .feature-card:hover {
-                transform: translateY(-10px);
-            }
-
-            .feature-icon {
-                font-size: 2.5rem;
-                color: var(--primary-color);
-                margin-bottom: 1rem;
-            }
-
-            /* About Section */
-            .about {
-                padding: 5rem 2rem;
-                background: white;
-            }
-
-            .about-content {
-                max-width: 800px;
-                margin: 0 auto;
-                text-align: center;
-            }
-
-            /* Team Section */
-            .team {
-                padding: 5rem 2rem;
-                background: var(--light-bg);
-            }
-
-            .team-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 2rem;
-                max-width: 1200px;
-                margin: 0 auto;
-            }
-
-            .team-member {
-                text-align: center;
-            }
-
-            .team-member img {
-                width: 150px;
-                height: 150px;
-                border-radius: 50%;
-                margin-bottom: 1rem;
-                border: 5px solid white;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            }
-
-            /* Contact Section */
-            .contact {
-                padding: 5rem 2rem;
-                background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-                color: white;
-            }
-
-            .contact-form {
-                max-width: 600px;
-                margin: 0 auto;
-            }
-
-            .form-group {
-                margin-bottom: 1.5rem;
-            }
-
-            .form-control {
-                width: 100%;
-                padding: 1rem;
-                border: none;
-                border-radius: 5px;
-                margin-top: 0.5rem;
-            }
-
-            /* Footer */
-            footer {
-                background: #222;
-                color: white;
-                padding: 3rem 2rem;
-                text-align: center;
-            }
-
-            .social-links {
-                margin: 1rem 0;
-            }
-
-            .social-links a {
-                color: white;
-                font-size: 1.5rem;
-                margin: 0 0.5rem;
-                transition: color 0.3s ease;
-            }
-
-            .social-links a:hover {
-                color: var(--secondary-color);
-            }
-
-            /* Animations */
-            @keyframes float {
-                0% { transform: translateY(0px); }
-                50% { transform: translateY(-20px); }
-                100% { transform: translateY(0px); }
-            }
-
-            /* Responsive Design */
-            @media (max-width: 768px) {
-                .hero h1 {
-                    font-size: 2.5rem;
-                }
-
-                .nav-links {
-                    display: none;
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <!-- Navbar -->
-        <nav class="navbar">
-            <div class="nav-links">
-                <a href="#home">Beranda</a>
-                <a href="#features">Fitur</a>
-                <a href="#about">Tentang</a>
-                <a href="#team">Tim</a>
-                <a href="#contact">Kontak</a>
+        <div class="profile-section">
+            <h2>Profil Pengguna</h2>
+            <div id="userProfile">
+                <!-- Profil pengguna akan ditampilkan di sini -->
             </div>
-        </nav>
+        </div>
 
-        <!-- Hero Section -->
-        <section id="home" class="hero">
-            <div class="hero-content" data-aos="fade-up">
-                <h1>Selamat Datang di Website Super Keren</h1>
-                <p>Menghadirkan pengalaman digital yang tak terlupakan</p>
-                <a href="#features" class="btn btn-primary">Jelajahi Fitur</a>
-                <a href="#contact" class="btn btn-secondary">Hubungi Kami</a>
-            </div>
-        </section>
+              <h2>Posisi yang Dibutuhkan</h2>
+<div class="job-listings">
+    <div class="job-card">
+        <div class="job-info">
+            <h3>Software Developer</h3>
+            <p>Pengalaman minimal 2 tahun</p>
+            <p>Gaji: Rp 10.000.000 - Rp 15.000.000</p>
+        </div>
+        <a href="lamar.html" class="btn-lamar" target="_blank" style="text-decoration: none;">
+            <i class="fas fa-paper-plane"></i> Lamar Sekarang
+        </a>
+    </div>
+    <div class="job-card">
+        <div class="job-info">
+            <h3>UI/UX Designer</h3>
+            <p>Pengalaman minimal 1 tahun</p>
+            <p>Gaji: Rp 8.000.000 - Rp 12.000.000</p>
+        </div>
+        <a href="lamar.html" class="btn-lamar" target="_blank" style="text-decoration: none;">
+            <i class="fas fa-paper-plane"></i> Lamar Sekarang
+        </a>
+    </div>
+    <div class="job-card">
+        <div class="job-info">
+            <h3>Digital Marketing</h3>
+            <p>Fresh graduate diperbolehkan</p>
+            <p>Gaji: Rp 5.000.000 - Rp 8.000.000</p>
+        </div>
+        <a href="lamar.html" class="btn-lamar" target="_blank" style="text-decoration: none;">
+            <i class="fas fa-paper-plane"></i> Lamar Sekarang
+        </a>
+    </div>
+</div>
 
-        <!-- Features Section -->
-        <section id="features" class="features">
-            <div class="features-grid">
-                <div class="feature-card" data-aos="fade-up">
-                    <i class="fas fa-rocket feature-icon"></i>
-                    <h3>Performa Super</h3>
-                    <p>Optimalkan website Anda dengan performa tinggi</p>
-                </div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
-                    <i class="fas fa-paint-brush feature-icon"></i>
-                    <h3>Desain Modern</h3>
-                    <p>Tampilan yang elegan dan responsif</p>
-                </div>
-                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
-                    <i class="fas fa-shield-alt feature-icon"></i>
-                    <h3>Keamanan Terjamin</h3>
-                    <p>Sistem keamanan yang handal</p>
-                </div>
-            </div>
-        </section>
+        <h2>Pendaftar</h2>
+        <table class="applications-table">
+            <thead>
+                <tr>
+                    <th>Tanggal</th>
+                    <th>Nama</th>
+                    <th>Usia</th>
+                    <th>Gender</th>
+                    <th>Pendidikan</th>
+                    <th>No. Telepon</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="applicationsTableBody">
+                <!-- Data akan dimasukkan di sini -->
+            </tbody>
+        </table>
+    </div>
 
-        <!-- About Section -->
-        <section id="about" class="about">
-            <div class="about-content" data-aos="fade-up">
-                <h2>Tentang Kami</h2>
-                <p>Kami adalah tim profesional yang berdedikasi untuk menciptakan solusi digital terbaik. Dengan pengalaman bertahun-tahun, kami telah membantu ratusan klien mencapai tujuan mereka.</p>
-            </div>
-        </section>
+    <script type="module">
+        // Import Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-        <!-- Team Section -->
-        <section id="team" class="team">
-            <h2 style="text-align: center; margin-bottom: 3rem;">Tim Kami</h2>
-            <div class="team-grid">
-                <div class="team-member" data-aos="fade-up">
-                    <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="Team Member">
-                    <h3>John Doe</h3>
-                    <p>CEO & Founder</p>
-                </div>
-                <div class="team-member" data-aos="fade-up" data-aos-delay="100">
-                    <img src="https://randomuser.me/api/portraits/women/1.jpg" alt="Team Member">
-                    <h3>Jane Smith</h3>
-                    <p>Lead Designer</p>
-                </div>
-                <div class="team-member" data-aos="fade-up" data-aos-delay="200">
-                    <img src="https://randomuser.me/api/portraits/men/2.jpg" alt="Team Member">
-                    <h3>Mike Johnson</h3>
-                    <p>Developer</p>
-                </div>
-            </div>
-        </section>
+        // Konfigurasi Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCgdRhE9IrAwKIsvSZ_C7Y4KevhD9vOZXg",
+            authDomain: "ecomerche-561d2.firebaseapp.com",
+            databaseURL: "https://ecomerche-561d2-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "ecomerche-561d2",
+            storageBucket: "ecomerche-561d2.firebasestorage.app",
+            messagingSenderId: "456001161495",
+            appId: "1:456001161495:web:508edf4396e2558416cf52",
+            measurementId: "G-NHV2K32BJL"
+        };
 
-        <!-- Contact Section -->
-        <section id="contact" class="contact">
-            <h2 style="text-align: center; margin-bottom: 3rem;">Hubungi Kami</h2>
-            <div class="contact-form">
-                <form>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Nama Lengkap">
-                    </div>
-                    <div class="form-group">
-                        <input type="email" class="form-control" placeholder="Email">
-                    </div>
-                    <div class="form-group">
-                        <textarea class="form-control" rows="5" placeholder="Pesan"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Kirim Pesan</button>
-                </form>
-            </div>
-        </section>
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
 
-        <!-- Footer -->
-        <footer>
-            <div class="social-links">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
-            </div>
-            <p>&copy; 2025 - Dibuat dengan ❤️ oleh EL NATHAN</p>
-        </footer>
-
-        <!-- Scripts -->
-        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-        <script>
-            // Inisialisasi AOS
-            AOS.init({
-                duration: 1000,
-                once: true
+        // Update waktu
+        function updateTime() {
+            const now = new Date();
+            const formattedTime = now.toLocaleString('id-ID', { 
+                dateStyle: 'full', 
+                timeStyle: 'medium' 
             });
+            document.getElementById('current-time').textContent = formattedTime;
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
 
-            // Navbar Scroll Effect
-            window.addEventListener('scroll', () => {
-                const navbar = document.querySelector('.navbar');
-                if (window.scrollY > 50) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
-            });
+        // Fungsi untuk melamar pekerjaan
+        window.applyJob = function(position) {
+            // Redirect ke halaman formulir lamaran dengan posisi yang dipilih
+            window.location.href = `form-lamaran.html?position=${encodeURIComponent(position)}`;
+        };
 
-            // Smooth Scroll
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
+        // Tampilkan profil pengguna dari localStorage
+        function displayUserProfile() {
+            const userProfile = document.getElementById('userProfile');
+            const savedProfile = localStorage.getItem('userProfile');
+            
+            if (savedProfile) {
+                const profile = JSON.parse(savedProfile);
+                userProfile.innerHTML = `
+                    <p><strong>Nama:</strong> ${profile.name || 'Tidak tersedia'}</p>
+                    <p><strong>Usia:</strong> ${profile.age || 'Tidak tersedia'}</p>
+                    <p><strong>Gender:</strong> ${profile.gender || 'Tidak tersedia'}</p>
+                `;
+            } else {
+                userProfile.innerHTML = '<p>Profil belum tersedia</p>';
+            }
+        }
+
+        // Tampilkan data pendaftaran dari Firebase
+        function displayApplications() {
+            const applicationsRef = ref(database, 'job-applications');
+            onValue(applicationsRef, (snapshot) => {
+                const tableBody = document.getElementById('applicationsTableBody');
+                tableBody.innerHTML = '';
+
+                if (snapshot.exists()) {
+                    const applications = snapshot.val();
+                    Object.keys(applications).reverse().forEach(key => {
+                        const application = applications[key];
+                        const row = document.createElement('tr');
+                        const date = new Date(application.timestamp);
+                        row.innerHTML = `
+                            <td>${date.toLocaleDateString('id-ID')}</td>
+                            <td>${application.fullName.charAt(0)}****</td>
+                            <td>${application.age}</td>
+                            <td>${application.gender.charAt(0)}****</td>
+                            <td>${application.education}</td>
+                            <td>${application.phoneNumber.substring(0, 3)}****${application.phoneNumber.substring(application.phoneNumber.length - 2)}</td>
+                            <td>Dalam Review</td>
+                        `;
+                        tableBody.appendChild(row);
                     });
-                });
+                } else {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="7" class="no-data">Belum ada data pendaftaran</td>
+                        </tr>
+                    `;
+                }
             });
+        }
 
-            // Form Submission
-            const form = document.querySelector('form');
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                alert('Terima kasih! Pesan Anda telah terkirim.');
-                form.reset();
-            });
+        // Inisialisasi dashboard
+        displayUserProfile();
+        displayApplications();
+    </script>
+</body>
+</html>
 
-            // Interactive Elements
-            document.querySelectorAll('.feature-card').forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    card.style.transform = 'scale(1.05)';
-                });
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'scale(1)';
-                });
-            });
-        </script>
-    </body>
-    </html>
     `);
 });
 
